@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sadaf's Birthday Adventure</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(180deg,#ffd6ea,#ff9fcf);
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+/* sections */
+
+.section{
+display:none;
+height:100vh;
+padding-top:100px;
+}
+
+/* glowing title */
+
+h1{
+font-size:55px;
+text-shadow:0 0 20px white;
+}
+
+/* buttons */
+
+button{
+padding:15px 35px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff3f9e;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+/* hearts */
+
+.heart{
+position:absolute;
+color:#ff4fa3;
+font-size:24px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+/* petals */
+
+.petal{
+position:absolute;
+font-size:20px;
+animation:fall 8s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+
+/* cake */
+
+.cake{
+font-size:90px;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* candle flames */
+
+.flame{
+font-size:25px;
+}
+
+/* hidden items */
+
+.hidden{
+position:absolute;
+cursor:pointer;
+font-size:28px;
+}
+
+.message{
+font-size:22px;
+max-width:650px;
+margin:auto;
+line-height:1.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+
+<div class="section" id="p1" style="display:block">
+
+<h1>Hello Sadaf (Noor) 🌸</h1>
+
+<p>This is not just a website.</p>
+
+<p>It's a small adventure made just for you.</p>
+
+<button onclick="next(2)">Begin the Journey</button>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="section" id="p2">
+
+<h1>Find the Hidden Heart 💗</h1>
+
+<p>Somewhere on the screen there is a hidden heart.</p>
+
+<p>Find it to continue.</p>
+
+<div class="hidden" style="top:60%;left:70%" onclick="next(3)">💗</div>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="section" id="p3">
+
+<h1>Little Question</h1>
+
+<p>Who is this birthday adventure made for?</p>
+
+<input id="answer" placeholder="Type the name">
+
+<br><br>
+
+<button onclick="check()">Unlock</button>
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div class="section" id="p4">
+
+<h1>Make a Wish ✨</h1>
+
+<p>Click the cake to blow the candles.</p>
+
+<div class="cake" onclick="blow()">🎂</div>
+
+<div id="candles" class="flame">🕯🕯🕯</div>
+
+</div>
+
+<!-- PAGE 5 FINAL -->
+
+<div class="section" id="p5">
+
+<h1>Happy Birthday Sadaf (Noor)</h1>
+
+<p class="message" id="text"></p>
+
+</div>
+
+<script>
+
+/* floating hearts */
+
+function heart(){
+
+let h=document.createElement("div")
+
+h.className="heart"
+h.innerHTML="❤"
+h.style.left=Math.random()*100+"vw"
+h.style.animationDuration=4+Math.random()*4+"s"
+
+document.body.appendChild(h)
+
+setTimeout(()=>h.remove(),7000)
+
+}
+
+setInterval(heart,400)
+
+/* petals */
+
+function petal(){
+
+let p=document.createElement("div")
+
+p.className="petal"
+p.innerHTML="🌸"
+p.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(p)
+
+setTimeout(()=>p.remove(),9000)
+
+}
+
+setInterval(petal,800)
+
+/* navigation */
+
+function next(n){
+
+document.querySelectorAll(".section").forEach(s=>s.style.display="none")
+
+document.getElementById("p"+n).style.display="block"
+
+}
+
+/* puzzle */
+
+function check(){
+
+let a=document.getElementById("answer").value.toLowerCase()
+
+if(a==="sadaf"){
+
+next(4)
+
+}else{
+
+alert("Try again 😊")
+
+}
+
+}
+
+/* blow candles */
+
+function blow(){
+
+document.getElementById("candles").innerHTML=""
+
+next(5)
+
+type()
+
+confetti()
+
+}
+
+/* typing message */
+
+let msg=`Sadaf,
+
+I didn't know what gift to give you today.
+
+So instead I made this little journey.
+
+Because someone like you deserves
+something different.
+
+Your smile makes ordinary days brighter.
+
+Your presence makes moments beautiful.
+
+And today the world celebrates you.
+
+Happy Birthday Noor ✨`
+
+let i=0
+
+function type(){
+
+if(i<msg.length){
+
+document.getElementById("text").innerHTML+=msg.charAt(i)
+
+i++
+
+setTimeout(type,40)
+
+}
+
+}
+
+/* confetti */
+
+function confetti(){
+
+for(let i=0;i<150;i++){
+
+let c=document.createElement("div")
+
+c.style.position="absolute"
+c.style.width="8px"
+c.style.height="8px"
+c.style.background="white"
+c.style.left=Math.random()*100+"vw"
+c.style.top="-10px"
+c.style.transition="3s"
+
+document.body.appendChild(c)
+
+setTimeout(()=>{
+c.style.top="100vh"
+c.style.transform="rotate(720deg)"
+},50)
+
+setTimeout(()=>c.remove(),3000)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
